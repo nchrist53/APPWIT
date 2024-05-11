@@ -31,7 +31,7 @@ namespace AWIT
         ConnexionUserControl ucConnexion;
         ClientPage pClient;
         CommandePage pCommande;
-        MusiquePage pService;
+        MusiquePage pMusique;
         AidePage pAide = new AidePage();
 
         public MainWindow()
