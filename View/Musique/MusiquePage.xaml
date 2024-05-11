@@ -52,7 +52,7 @@
         <StackPanel x:Name="GestionService">
             <TextBlock>Détail</TextBlock>
             <DockPanel>
-                <ListBox  Name="LbServices"  Width="250" SelectionChanged="LbServices_SelectionChanged">
+                <ListBox  Name="LbMusique"  Width="250" SelectionChanged="LbServices_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <!-- contexte de chaque ligne = données de chaque ligne -->
@@ -65,7 +65,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <TextBlock>
-                    <StackPanel DataContext="{Binding ElementName=LbServices, Path=SelectedItem}" MaxWidth="800" Name="SpDetailService">
+                    <StackPanel DataContext="{Binding ElementName=LbMusique, Path=SelectedItem}" MaxWidth="800" Name="SpDetailService">
                         <Grid x:Name="GDetailService">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -93,7 +93,7 @@
                             <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding REFERENCE}" IsReadOnly="true" />
         
                             <!-- Catégorie -->
-                            <Label Grid.Row="2" Grid.Column="0"  >Catégorie</Label>
+                            <Label Grid.Row="2" Grid.Column="0"  >Auteur</Label>
                             <ComboBox x:Name="CbCat" Grid.Row="2" Grid.Column="1" DisplayMemberPath="LIBELE" />
                                 
                                 <!--<TextBox x:Name="TxbCat" Grid.Row="2" Grid.Column="1" Text="{Binding categorie.LIBELE}" />-->
@@ -103,33 +103,17 @@
                             <TextBox x:Name="TxbTitre" Grid.Row="3" Grid.Column="1" Text="{Binding TITRE}" />
                             
                             <!-- Résumé -->
-                            <Label Grid.Row="4" Grid.Column="0"  >Résumé</Label>
+                            <Label Grid.Row="4" Grid.Column="0"  >Paroles</Label>
                             <TextBox x:Name="TxbResume" Grid.Row="4" Grid.Column="1" Text="{Binding RESUME}" />
                                                        
         
                             <!-- DESCRIPTION -->
-                            <Label Grid.Row="5" Grid.Column="0">Description</Label>
+                            <Label Grid.Row="5" Grid.Column="0">Son</Label>
                             <TextBox x:Name="TxbDes" Grid.Row="5" Grid.Column="1" Text="{Binding DESCRIPTION}"/>
                             
-                             <!-- PRIX -->
-                            <Label Grid.Row="6" Grid.Column="0">Prix</Label>
-                            <TextBox x:Name="TxbPrix" Grid.Row="6" Grid.Column="1" Text="{Binding PRIX}"/>
-                            
                             <!-- STOCK -->
-                            <Label Grid.Row="7" Grid.Column="0">Stock</Label>
+                            <Label Grid.Row="7" Grid.Column="0">Id album</Label>
                             <TextBox x:Name="TxbStock" Grid.Row="7" Grid.Column="1" Text="{Binding STOCK}"/>
-                            
-                             <!-- Photo -->
-                            <Label Grid.Row="8" Grid.Column="0">Photo</Label>
-                            <DockPanel x:Name="TxbPhoto" Grid.Row="8" Grid.Column="1">
-                                <Image Margin="2" Width="100" Height="100" Name="ImgService">
-                                                        <Image.Source>
-                                                            <Binding Path="PHOTO">
-                                                            </Binding>
-                                                        </Image.Source>
-                                </Image>
-                                <Button Height="30" Name="BtnTelecharger" Content="Sélectionner une image" Click="BtnTelecharger_Click" />
-                            </DockPanel> 
 
 
                             <!-- MODIFIER -->

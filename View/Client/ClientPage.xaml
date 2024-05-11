@@ -17,7 +17,7 @@
                         <DataTemplate>
                             <!-- contexte de chaque ligne = données de chaque ligne -->
                             <TextBlock  >
-                                <Run Text="{Binding LOGIN, Converter={StaticResource EffacerEspaceConverter}}" FontWeight="SemiBold" />
+                                <Run Text="{Binding LOGIN}" FontWeight="SemiBold" />
                                 <Run Text=":" />
                                 <Run Text="{Binding PRENOM}" />
                                 <Run Text=" " />

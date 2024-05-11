@@ -46,7 +46,7 @@ namespace AWIT.View.Musique
 
 
             //
-            LbServices.ItemsSource = this.lesMusiques;
+            LbMusique.ItemsSource = this.lesMusiques;
             CbCat.ItemsSource = MusiqueViewModel.LesMusiques;
             this.MusiqueViewModel.LeControl = LbMusique;
 
@@ -64,7 +64,7 @@ namespace AWIT.View.Musique
                         break;
                     }
                 }
-                LbServices.SelectedItem = this.lesMusiques[cle];
+                LbMusique.SelectedItem = this.lesMusiques[cle];
                 SpDetailService.DataContext = this.lesMusiques[cle];
                 CbCat.SelectedItem = this.lesMusiques[cle].auteurs;
 
@@ -82,7 +82,7 @@ namespace AWIT.View.Musique
         private void LbServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            laMusique = LbServices.SelectedItem as musique;
+            laMusique = LbMusique.SelectedItem as musique;
             if (laMusique == null) laMusique = lesMusiques[0];
             SpDetailService.DataContext = laMusique;
 
