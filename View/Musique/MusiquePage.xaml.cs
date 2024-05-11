@@ -26,10 +26,10 @@ namespace AWIT.View.Musique
     /// </summary>
     public partial class MusiquePage : Page
     {
-        ServiceViewModel<ListBox> serviceViewModel = new ServiceViewModel<ListBox>();
+        MusiqueViewModel<ListBox> MusiqueViewModel = new MusiqueViewModel<ListBox>();
         Frame frame = null;
-        List<service> lesServices;
-        service leService;
+        List<musique> lesMusiques;
+        musique laMusique;
         //le nom de l'image
         string lienImage;
         const string SERVURL = "http://localhost:8000/upload";
@@ -37,43 +37,43 @@ namespace AWIT.View.Musique
         BitmapImage bitmapImage;
         string imagePath;
 
-        public ServicePage(Frame frame, service unService = null)
+        public MusiquePage(Frame frame, musique uneMusique = null)
         {
             InitializeComponent();
             //
             this.frame = frame;
-            this.lesServices = serviceViewModel.LesServices;
+            this.lesMusiques = MusiqueViewModel.LesMusiques;
 
 
             //
-            LbServices.ItemsSource = this.lesServices;
-            CbCat.ItemsSource = serviceViewModel.LesCategories;
-            this.serviceViewModel.LeControl = LbServices;
+            LbServices.ItemsSource = this.lesMusiques;
+            CbCat.ItemsSource = MusiqueViewModel.LesMusiques;
+            this.MusiqueViewModel.LeControl = LbMusique;
 
 
             //On teste si un service à été envoyé dans la page
-            if (unService != null)
+            if (uneMusique != null)
             {
-                this.leService = unService;
+                this.laMusique = uneMusique;
                 int cle = -1;
-                foreach (service item in this.lesServices)
+                foreach (musique item in this.lesMusiques)
                 {
                     cle++;
-                    if (item.Equals(this.leService))
+                    if (item.Equals(this.laMusique))
                     {
                         break;
                     }
                 }
-                LbServices.SelectedItem = this.lesServices[cle];
-                SpDetailService.DataContext = this.lesServices[cle];
-                CbCat.SelectedItem = this.lesServices[cle].categorie;
+                LbServices.SelectedItem = this.lesMusiques[cle];
+                SpDetailService.DataContext = this.lesMusiques[cle];
+                CbCat.SelectedItem = this.lesMusiques[cle].auteurs;
 
             }
             else
             {
-                SpDetailService.DataContext = this.lesServices[0];
-                SpDetailService.DataContext = this.lesServices[0];
-                CbCat.SelectedItem = this.lesServices[0].categorie;
+                SpDetailService.DataContext = this.lesMusiques[0];
+                SpDetailService.DataContext = this.lesMusiques[0];
+                CbCat.SelectedItem = this.lesMusiques[0].auteurs;
             }
         }
 
@@ -82,13 +82,11 @@ namespace AWIT.View.Musique
         private void LbServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            leService = LbServices.SelectedItem as service;
-            if (leService == null) leService = lesServices[0];
-            SpDetailService.DataContext = leService;
+            laMusique = LbServices.SelectedItem as musique;
+            if (laMusique == null) laMusique = lesMusiques[0];
+            SpDetailService.DataContext = laMusique;
 
-            CbCat.SelectedItem = leService.categorie;
-            BitmapImage bitmapImage = new BitmapImage(new Uri($"{URI}{leService.PHOTO}"));
-            ImgService.Source = bitmapImage;
+            CbCat.SelectedItem = laMusique.auteurs;
         }
 
 
@@ -96,35 +94,24 @@ namespace AWIT.View.Musique
         private async void BtModifier_Click(object sender, RoutedEventArgs e)
         {
 
-            this.leService.TITRE = TxbTitre.Text;
-            this.leService.RESUME = TxbResume.Text;
-            this.leService.DESCRIPTION = TxbDes.Text;
-            this.leService.PHOTO = this.lienImage;
-            this.leService.STOCK = Convert.ToInt16(TxbStock.Text);
-            this.leService.PRIX = Convert.ToDecimal(TxbPrix.Text.Replace('.', ','));
-            this.leService.CAT = (CbCat.SelectedItem as categorie).NUMERO;
-            this.leService.categorie = (CbCat.SelectedItem as categorie);
-            if (this.bitmapImage != null)
-            {
-                await UploadImageAsync(SERVURL, this.imagePath);
-                this.leService.PHOTO = this.lienImage;
-                this.serviceViewModel.ModifierUnService(this.leService);
-            }
-
-
+            this.laMusique.TITRE = TxbTitre.Text;
+            this.laMusique.PAROLE = TxbResume.Text;
+            this.laMusique.SON = TxbDes.Text;
+            this.laMusique.IDALBUM = Convert.ToInt16(TxbStock.Text);
+            this.laMusique.auteurs = (CbCat.SelectedItem as auteur);
         }
 
         //Suppression d'un service
         private void BtSupprimer_Click(object sender, RoutedEventArgs e)
         {
-            serviceViewModel.SupprimerUnService(leService);
+            MusiqueViewModel.SupprimerUnService(laMusique);
         }
 
         //Afficher le conteneur pour ajouter un nouveau service
         private void BtNouveau_Click(object sender, RoutedEventArgs e)
         {
             Initialiser(false);
-            SpDetailService.DataContext = new service();
+            SpDetailService.DataContext = new musique();
         }
 
         //Ajouter un service !! On appelle un tack ici pour les images
@@ -132,21 +119,15 @@ namespace AWIT.View.Musique
         {
             Initialiser(true);
             //Créer un service avec les resneignements fournis
-            this.leService = new service();
-            this.leService.TITRE = TxbTitre.Text;
-            this.leService.RESUME = TxbResume.Text;
-            this.leService.DESCRIPTION = TxbDes.Text;
+            this.laMusique = new musique();
+            this.laMusique.TITRE = TxbTitre.Text;
+            this.laMusique.PAROLE = TxbResume.Text;
+            this.laMusique.SON = TxbDes.Text;
 
-            this.leService.STOCK = Convert.ToInt16(TxbStock.Text);
-            this.leService.PRIX = Convert.ToDecimal(TxbPrix.Text.Replace('.', ','));
-            this.leService.CAT = (CbCat.SelectedItem as categorie).NUMERO;
-            this.leService.categorie = (CbCat.SelectedItem as categorie);
-            if (this.bitmapImage != null)
-            {
-                await UploadImageAsync(SERVURL, this.imagePath);
-                this.leService.PHOTO = this.lienImage;
-                this.serviceViewModel.AjouterUnService(this.leService);
-            }
+            this.laMusique.IDALBUM = Convert.ToInt16(TxbStock.Text);
+
+            this.laMusique.auteurs = (CbCat.SelectedItem as auteur).IDAUT;
+            this.laMusique.auteurs = (CbCat.SelectedItem as auteur);
 
 
         }
@@ -155,8 +136,8 @@ namespace AWIT.View.Musique
         private void BtAnnulerNouveau_Click(object sender, RoutedEventArgs e)
         {
             Initialiser(true);
-            SpDetailService.DataContext = this.lesServices[0];
-            CbCat.SelectedItem = this.lesServices[0].categorie;
+            SpDetailService.DataContext = this.lesMusiques[0];
+            CbCat.SelectedItem = this.lesMusiques[0].auteurs;
         }
 
 

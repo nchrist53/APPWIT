@@ -15,119 +15,119 @@ namespace AWIT.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Data db = new Data();
-        private List<service> lesServices;
-        private service leService;
-        private T leControl;
-        private List<categorie> lesCategories;
-        private categorie laCategorie;
-        public ServiceViewModel()
+        private List<musique> lesMusiques;
+        private musique laMusique;
+        private List<auteur> lesAuteurs;
+        private auteur lAuteur;
+        public MusiqueViewModel()
         {
-            this.lesServices = db.services.ToList();
-            this.lesCategories = db.categories.ToList();
+            this.lesMusiques = db.musiques.ToList();
+            this.lesAuteurs = db.auteurs.ToList();
 
         }
 
-        public List<categorie> LesCategories
+        public List<auteur> LesAuteurs
         {
             get
             {
-                return this.lesCategories;
+                return this.lesAuteurs;
             }
             set
             {
-                this.lesCategories = value;
+                this.lesAuteurs = value;
+                OnPropertyChanged("lesAuteurs");
+            }
+        }
+
+        public auteur LeAuteur
+        {
+            get
+            {
+                return this.lAuteur;
+            }
+            set
+            {
+                this.lAuteur = value;
                 OnPropertyChanged("LesCategories");
             }
         }
 
-        public categorie LaCategorie
+        public List<musique> LesMusiques
         {
             get
             {
-                return this.laCategorie;
+                return this.lesMusiques;
             }
             set
             {
-                this.laCategorie = value;
-                OnPropertyChanged("LesCategories");
-            }
-        }
-        public List<service> LesServices
-        {
-            get
-            {
-                return this.lesServices;
-            }
-            set
-            {
-                this.lesServices = value;
-                OnPropertyChanged("LesServices");
+                this.lesMusiques = value;
+                OnPropertyChanged("lesMusiques");
             }
         }
 
 
-        public service LeService
+        public musique LeService
         {
-            get { return this.leService; }
+            get { return this.laMusique; }
             set
             {
-                this.leService = value;
-                OnPropertyChanged("LeService");
+                this.laMusique = value;
+                OnPropertyChanged("laMusique");
             }
         }
 
-        public service RechercherLeService(int reference)
+        public musique RechercherLaMusique(int reference)
         {
-            return this.lesServices.Where(unService => unService.REFERENCE == reference).FirstOrDefault();
+            return this.lesMusiques.Where(uneMusique => uneMusique.REFMUS == reference).FirstOrDefault();
 
         }
 
         //A compléter
-        public List<service> RechercherLesServicesDUneCategorie(categorie uneCategorie)
+        public List<musique> RechercherUneMusiqueDunAuteur(auteur unAuteur)
         {
-            return this.lesServices.Where(unService => unService.categorie.Equals(uneCategorie)).ToList();
+            return this.lesMusiques.Where(uneMusique => uneMusique.auteurs.Equals(unAuteur)).ToList();
 
         }
 
-        public void ModifierUnService(service unService)
+        public void ModifierUneMusique(musique uneMusique)
         {
             //On récupère l'indice du client
-            for (int i = 0; i < this.lesServices.Count; i++)
+            for (int i = 0; i < this.lesMusiques.Count; i++)
             {
-                if (this.lesServices[i].REFERENCE == unService.REFERENCE)
+                if (this.lesMusiques[i].REFMUS == uneMusique.REFMUS)
                 {
-                    db.services.ToList()[i] = unService;
+                    db.musiques.ToList()[i] = uneMusique;
                 }
             }
-            int cle = db.services.ToList().IndexOf(this.RechercherLeService(unService.REFERENCE));
-            db.services.ToList()[cle] = unService;
+            int cle = db.musiques.ToList().IndexOf(this.RechercherLaMusique(uneMusique.REFMUS));
+            db.musiques.ToList()[cle] = uneMusique;
 
             //On essaye de mettre à jour la bdd
             try
             {
                 db.SaveChanges();
-                MessageBox.Show($"Le service avec la référence : {unService.REFERENCE} a été modifié.e!");
-                LesServices = db.services.ToList();
+                MessageBox.Show($"Le service avec la référence : {uneMusique.REFMUS} a été modifié.e!");
+                lesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
                 MessageBox.Show("pas OK");
             }
         }
-        public service RetournerLeDernierCService(service unService)
+        public musique RetournerLaDerniereMusique(musique uneMusique)
         {
-            return this.lesServices.Last();
+            return this.lesMusiques.Last();
         }
-        public void AjouterUnService(service unService)
+        public void AjouterUneMusique(musique uneMusique)
         {
 
-            db.services.Add(unService);
+            db.musiques.Add(uneMusique);
 
             try
             {
                 db.SaveChanges();
-                MessageBox.Show($"Le service {unService.TITRE} a été ajouté!");
-                LesServices = db.services.ToList();
+                MessageBox.Show($"Le service {uneMusique.TITRE} a été ajouté!");
+                lesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
@@ -138,20 +138,20 @@ namespace AWIT.ViewModel
 
         }
 
-        public void SupprimerUnService(service unService)
+        public void SupprimerUneMusique(musique uneMusique)
         {
             int cle = -1;
-            if (this.lesServices.Contains(unService))
+            if (this.lesMusiques.Contains(uneMusique))
             {
-                cle = lesServices.IndexOf(unService);
-                db.services.Remove(unService);
+                cle = lesMusiques.IndexOf(uneMusique);
+                db.musiques.Remove(uneMusique);
 
             }
             try
             {
                 db.SaveChanges();
-                MessageBox.Show($"Le service {unService.TITRE} a été supprimé!");
-                LesServices = db.services.ToList();
+                MessageBox.Show($"Le service {uneMusique.TITRE} a été supprimé!");
+                lesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
