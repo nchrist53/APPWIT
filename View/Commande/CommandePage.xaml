@@ -1,0 +1,173 @@
+﻿<Page x:Class="AWIT.View.Commande.CommandePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AWIT.View.Commande"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CommandePage">
+    <Page.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Snow" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="MinWidth" Value="250" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Maroon" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="MaxColumnWidth" Value="200" />
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Salmon" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+        </Style>
+        <!-- Les méthodes appelées dans le xaml-->
+        
+    </Page.Resources>
+
+    <Grid>
+        <!-- StackPanel : 1er conteneur -->
+        <StackPanel x:Name="SpGestionClient">
+            <TextBlock>Détail</TextBlock>
+            <DockPanel>
+                <!-- ListBox de commande-->
+                <ListBox  Name="LbCommandes"  Width="250" SelectionChanged="LbCommandes_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock  >
+                                <Run Text="{Binding NOCOMMANDE}" FontWeight="SemiBold"/>
+                                <Run Text=":" />
+                                <Run Text="{Binding LOGIN}" />
+                                <Run Text=" - " />
+                                <Run Text="{Binding DATE}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <!-- Le contrôle ou seront affichés les commandes en détail -->
+                <TextBlock>
+                    <StackPanel DataContext="{Binding ElementName=LbCommandes, Path=SelectedItem}" MaxWidth="800" Name="SpDetailCommande">
+                        <Grid x:Name="GDetailCommande">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions >
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />                             
+
+                            </Grid.RowDefinitions>
+                            <!-- Titre de la page -->
+                            <TextBlock x:Name="TxbTitre" Grid.ColumnSpan="2">Détail de la commande : </TextBlock>
+
+                            <!-- Numéro -->
+                            <Label Grid.Row="1" Grid.Column="0"  >N° Commande</Label>
+                            <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding LOGIN}" IsReadOnly="True"/>
+        
+                            <!-- Login -->
+                            <Label Grid.Row="2" Grid.Column="0">Login</Label>
+                            <DockPanel  Grid.Row="2" Grid.Column="1" Name="DpInfoClient">
+                                <TextBox x:Name="TxbLogin" Text="{Binding LOGIN}" />
+                                <Button x:Name="BtnDetailClient" Click="BtnDetailClient_Click" Width="150">
+                                    <Run Text="{Binding client.NOM, StringFormat=AFFICHER DETAIL {0}}" />
+                                </Button>
+                                <ComboBox Name="CbLesClients" DisplayMemberPath="LOGIN" Margin="5,1,0,1" SelectionChanged="CbLesClients_SelectionChanged" Width="150"/>
+                            </DockPanel>
+                            <!-- Date -->
+                            <Label Grid.Row="4" Grid.Column="0">Date</Label>
+                            
+                            <TextBox x:Name="TxbDate" Grid.Row="4" Grid.Column="1" Text="{Binding DATE}" LostFocus="TxbDate_LostFocus" GotFocus="TxbDate_GotFocus"/>
+                           
+                                
+
+
+                            <!-- Les services -->
+                            <StackPanel Grid.Row="5" Grid.ColumnSpan="2">
+                                <Label  >Les commandes</Label>
+                                <DataGrid  Margin="5" Name="DgCommandes" ItemsSource="{Binding lignecommandes}" AutoGenerateColumns="False"  MaxColumnWidth="200">
+                                    <DataGrid.Columns >
+                                        <DataGridTextColumn Header="Référence"  Binding="{Binding service.REFERENCE}"/>
+                                        <DataGridTextColumn Header="Titre"  Binding="{Binding service.TITRE}"/>
+                                        <DataGridTextColumn Header="Prix"  Binding="{Binding service.PRIX}"/>
+                                        <DataGridTemplateColumn Header="Photo">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>                                                                                               
+                                                    <Image Margin="2" Width="100" Height="100">
+                                                        <Image.Source>
+                                                            <Binding Path="service.PHOTO">
+                                                            </Binding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        
+                                        <DataGridTextColumn Header="Stock"  Binding="{Binding service.STOCK}"/>
+                                        <DataGridTextColumn Header="Catégorie" Binding="{Binding service.categorie.LIBELE}" />
+                                         
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button x:Name="BtnServiceModifier" Click="BtnServiceModifier_Click"> Détail</Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                                                              
+                                        
+                                    </DataGrid.Columns>
+                                </DataGrid>  
+                                  
+                            </StackPanel>
+                            <!-- MODIFIER -->
+                            <StackPanel Name="SpNouveau" Grid.Row="6" Grid.ColumnSpan="2" Visibility="Visible">
+                            <Button x:Name="BtModifier"  Click="BtModifier_Click">MODIFIER COMMANDE</Button>
+
+                            <!-- SUPPRIMER -->
+                            <Button x:Name="BtSupprimer"  Click="BtSupprimer_Click">SUPPRIMER COMMANDE</Button>
+
+                            <!-- VOTRE TAF-->
+                            
+                                <Button x:Name="BtAjoutLigneCommande" >AJOUTER UNE LIGNE</Button> 
+                                <Button x:Name="BtModifierLigneCommande" >MODIFIER UNE LIGNE</Button>
+                                 <Button x:Name="BtSupprimerLigneCommande" >SUPPRIMER UNE LIGNE</Button>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </StackPanel>
+                </TextBlock>
+
+            </DockPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>
