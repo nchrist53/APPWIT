@@ -19,7 +19,7 @@ namespace AWIT.Model
         [Key]
         public long IDABO { get; set; }
 
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string NOM { get; set; }
 
         public string DESCRIPTION { get; set; }

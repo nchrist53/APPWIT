@@ -22,10 +22,10 @@ namespace AWIT.Model
 
         public long IDALBUM { get; set; }
 
-        [StringLength(50)]
+        [StringLength(maximumLength: 50)]
         public string TITRE { get; set; }
 
-        [StringLength(255)]
+        [StringLength(maximumLength: 255)]
         public string SON { get; set; }
 
         public string PAROLE { get; set; }

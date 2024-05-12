@@ -19,6 +19,19 @@ namespace AWIT.ViewModel
         private musique laMusique;
         private List<auteur> lesAuteurs;
         private auteur lAuteur;
+        private T leControl;
+
+        public T LeControl
+        {
+            get
+            {
+                return this.leControl;
+            }
+            set
+            {
+                this.leControl = value;
+            }
+        }
         public MusiqueViewModel()
         {
             this.lesMusiques = db.musiques.ToList();
@@ -35,7 +48,7 @@ namespace AWIT.ViewModel
             set
             {
                 this.lesAuteurs = value;
-                OnPropertyChanged("lesAuteurs");
+                OnPropertyChanged("LesAuteurs");
             }
         }
 
@@ -48,7 +61,7 @@ namespace AWIT.ViewModel
             set
             {
                 this.lAuteur = value;
-                OnPropertyChanged("LesCategories");
+                OnPropertyChanged("LeAuteur");
             }
         }
 
@@ -61,18 +74,18 @@ namespace AWIT.ViewModel
             set
             {
                 this.lesMusiques = value;
-                OnPropertyChanged("lesMusiques");
+                OnPropertyChanged("LesMusiques");
             }
         }
 
 
-        public musique LeService
+        public musique LaMusique
         {
             get { return this.laMusique; }
             set
             {
                 this.laMusique = value;
-                OnPropertyChanged("laMusique");
+                OnPropertyChanged("LaMusique");
             }
         }
 
@@ -165,6 +178,16 @@ namespace AWIT.ViewModel
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
+            MisaAJourInterface(this.leControl);
+        }
+
+        public void MisaAJourInterface(T leControl)
+        {
+            Control x = leControl as Control;
+
+            (leControl as ListBox).ItemsSource = null;
+            (leControl as ListBox).ItemsSource = LesMusiques;
+
         }
     }
 }

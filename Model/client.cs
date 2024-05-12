@@ -16,16 +16,16 @@ namespace AWIT.Model
         }
         
         [Key]
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string LOGINCLI { get; set; }
 
-        [StringLength(16)]
+        [StringLength(maximumLength: 16)]
         public string MDPCLI { get; set; }
 
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string NOMCLI { get; set; }
 
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string PRENOMCLI { get; set; }
 
         [Column(TypeName = "date")]

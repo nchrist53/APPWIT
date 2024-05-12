@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AWIT.ViewModel
 {
@@ -16,6 +17,19 @@ namespace AWIT.ViewModel
         private Data db = new Data();
         private List<abonnement> lesTiers;
         private abonnement leTier;
+        private T leControl;
+
+        public T LeControl
+        {
+            get
+            {
+                return this.leControl;
+            }
+            set
+            {
+                this.leControl = value;
+            }
+        }
 
         public TiersViewModel()
         {
@@ -39,10 +53,10 @@ namespace AWIT.ViewModel
 
         public abonnement LeTier
         {
-            get { return LeTier; }
+            get { return leTier; }
             set
             {
-                LeTier = value;
+                leTier = value;
                 OnPropertyChanged("LeTier");
             }
         }
@@ -130,6 +144,16 @@ namespace AWIT.ViewModel
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
+            MisaAJourInterface(this.leControl);
+        }
+
+        public void MisaAJourInterface(T leControl)
+        {
+            Control x = leControl as Control;
+
+            (leControl as ListBox).ItemsSource = null;
+            (leControl as ListBox).ItemsSource = LesTiers;
+
         }
     }
 }

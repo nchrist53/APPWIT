@@ -35,6 +35,7 @@ namespace AWIT.View.Tiers
             //
             this.frame = frame;
             this.lesTiers = tiersViewModel.LesTiers;
+            tiersViewModel.LeControl = LbTiers;
 
 
             //
@@ -100,14 +101,12 @@ namespace AWIT.View.Tiers
         {
             Initialiser(true);
             //Créer un Tier avec les renseignements fournis
-            abonnement unTier = new abonnement
-            {
-                IDABO = long.Parse(TxbID.Text),
-                NOM = TxbNom.Text,
-                DESCRIPTION = TxbDescription.Text,
-                PRIXMENSUEL = decimal.Parse(TxbPrix.Text),
-                IMAGE = TxbImage.Text
-            };
+            abonnement unTier = new abonnement();
+            unTier.IDABO = long.Parse(TxbID.Text);
+            unTier.NOM = TxbNom.Text;
+            unTier.DESCRIPTION = TxbDescription.Text;
+            unTier.PRIXMENSUEL = Convert.ToDecimal(TxbPrix.Text.Replace(".",","));
+            unTier.IMAGE = TxbImage.Text;
             tiersViewModel.AjouterUnTier(unTier);
 
             Initialiser(true);

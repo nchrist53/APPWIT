@@ -31,6 +31,7 @@ namespace AWIT.View.Musique
         List<musique> lesMusiques;
         musique laMusique;
 
+
         public MusiquePage(Frame frame, musique uneMusique = null)
         {
             InitializeComponent();
@@ -41,6 +42,8 @@ namespace AWIT.View.Musique
 
             //
             LbMusique.ItemsSource = this.lesMusiques;
+
+            musiqueViewModel.LeControl = LbMusique;
 
 
             //On teste si un service à été envoyé dans la page
@@ -81,11 +84,14 @@ namespace AWIT.View.Musique
         //Modifier un service avec les renseignements fournis !! on appelle un task ici
         private void BtModifier_Click(object sender, RoutedEventArgs e)
         {
-
+            /*
             this.laMusique.TITRE = TxbTitre.Text;
             this.laMusique.PAROLE = TxbResume.Text;
             this.laMusique.SON = TxbDes.Text;
             this.laMusique.IDALBUM = Convert.ToInt16(TxbStock.Text);
+            */
+
+            musiqueViewModel.ModifierUneMusique(laMusique);
         }
 
         //Suppression d'un service

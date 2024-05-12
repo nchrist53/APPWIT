@@ -18,7 +18,7 @@ namespace AWIT.Model
         [Key]
         public long IDAUT { get; set; }
 
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string NOM { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

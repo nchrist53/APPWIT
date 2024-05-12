@@ -13,7 +13,7 @@ namespace AWIT.Model
         public long REFCOM { get; set; }
 
         [Required]
-        [StringLength(25)]
+        [StringLength(maximumLength: 25)]
         public string LOGINCLI { get; set; }
 
         public long IDABO { get; set; }

@@ -9,9 +9,6 @@
       Title="TiersPage">
 
     <Page.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="Snow" />
             <Setter Property="Margin" Value="2" />

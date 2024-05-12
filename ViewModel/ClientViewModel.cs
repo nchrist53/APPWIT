@@ -17,6 +17,20 @@ namespace AWIT.ViewModel
         private Data db = new Data();
         private List<client> lesClients;
         private client leClient;
+        private T leControl;
+
+        public T LeControl
+        {
+            get
+            {
+                return this.leControl;
+            }
+            set
+            {
+                this.leControl = value;
+            }
+        }
+
         public ClientViewModel()
         {
             lesClients = db.clients.ToList();
@@ -129,6 +143,16 @@ namespace AWIT.ViewModel
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
+            MisaAJourInterface(this.leControl);
+        }
+
+        public void MisaAJourInterface(T leControl)
+        {
+            Control x = leControl as Control;
+
+            (leControl as ListBox).ItemsSource = null;
+            (leControl as ListBox).ItemsSource = LesClients;
+
         }
 
     }

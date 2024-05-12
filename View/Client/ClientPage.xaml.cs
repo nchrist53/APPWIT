@@ -40,6 +40,8 @@ namespace AWIT.View.Client
             this.lesClients = clientViewModel.LesClients;
             LbClients.ItemsSource = this.lesClients;
 
+            clientViewModel.LeControl = LbClients;
+
             if (unClient != null)
             {
                 this.leClient = unClient;
