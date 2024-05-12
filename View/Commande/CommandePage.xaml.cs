@@ -14,9 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AWIT.Model;
 using AWIT.ViewModel;
-using AWIT.Musique;
 using AWIT.View.Client;
-using AWIT.View.Musique;
+using AWIT.View.Tiers;
 
 namespace AWIT.View.Commande
 {
@@ -30,7 +29,6 @@ namespace AWIT.View.Commande
         Frame frame = null;
         private List<commande> lesCommandes;
         private commande laCommande;
-        DateTime laDate;
         public CommandePage(Frame frame, commande uneCommande = null)
         {
             InitializeComponent();
@@ -42,9 +40,6 @@ namespace AWIT.View.Commande
 
             //Envoyer la listBox au ViewModel
             commandeViewModel.LeControl = LbCommandes;
-
-            //Le combox des clients
-            CbLesClients.ItemsSource = commandeViewModel.GetLesClients();
 
             //Si la page vient d'une action autre que le menu, on a une commande en argument
             if (uneCommande != null)
@@ -79,25 +74,7 @@ namespace AWIT.View.Commande
         {
             this.laCommande = LbCommandes.SelectedItem as commande;
             SpDetailCommande.DataContext = this.laCommande;
-            BtnDetailClient.Visibility = Visibility.Visible;
         }
-
-        //Affiche les informations sur le client sur une nouvelle page
-        private void BtnDetailClient_Click(object sender, RoutedEventArgs e)
-        {
-            this.frame.Content = new ClientPage(this.frame, laCommande.client as client);
-        }
-
-
-        //Nous dirige vers la page ServicePage avec le service sélectionné.
-        private void BtnServiceModifier_Click(object sender, RoutedEventArgs e)
-        {
-            lignecommande uneLignecommande = DgCommandes.SelectedItem as lignecommande;
-            service unService = uneLignecommande.service;
-            this.frame.Content = new ServicePage(this.frame, unService);
-
-        }
-
 
         //Modification de la commande avec les indications
         private void BtModifier_Click(object sender, RoutedEventArgs e)
@@ -106,18 +83,8 @@ namespace AWIT.View.Commande
 
             try
             {
-                if (CbLesClients.SelectedItem != null)
-                {
-                    this.laCommande.client = CbLesClients.SelectedItem as client;
-                    this.laCommande.LOGINCLI = this.laCommande.LOGINCLI;
-                }
-
-                string date = TxbDate.Text.Substring(0, 10);
-                //string heure = TxbDate.Text.Substring(11, 8);
-                string[] dateTableau = date.Split('/');
-                DateTime dateTime = new DateTime(Convert.ToInt16(dateTableau[2]), Convert.ToInt16(dateTableau[1]), Convert.ToInt16(dateTableau[0]));
-                this.laDate = dateTime;
-                this.laCommande.DATECRE = this.laDate != null ? this.laDate : DateTime.Now;
+                this.laCommande.LOGINCLI = TxbLogin.Text;
+                this.laCommande.IDABO = long.Parse(TxbIDABO.Text);
                 this.commandeViewModel.ModifierUneCommande(this.laCommande);
             }
             catch (Exception exception)
@@ -134,39 +101,40 @@ namespace AWIT.View.Commande
             this.commandeViewModel.SupprimerCommande(this.laCommande);
         }
 
-
-        //Vérification que la date a le bon format JJ/MM/AAAA
-        private void TxbDate_LostFocus(object sender, RoutedEventArgs e)
+        private void BtNouveau_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(TxbDate.Text.Substring(0, 10));
-            try
-            {
-                string date = TxbDate.Text.Substring(0, 10);
-                //string heure = TxbDate.Text.Substring(11, 8);
-                string[] dateTableau = date.Split('/');
-                DateTime dateTime = new DateTime(Convert.ToInt16(dateTableau[2]), Convert.ToInt16(dateTableau[1]), Convert.ToInt16(dateTableau[0]));
-                this.laDate = dateTime;
-            }
-            catch
-            {
-                MessageBox.Show("La date est invalide!!");
-                TxbDate.Text = "";
-            }
-
+            Initialiser(false);
+            SpDetailCommande.DataContext = new commande();
         }
 
-        //Mettre un lien entre le comboxbox client et textbox client
-        private void CbLesClients_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BtAjouter_Click(object sender, RoutedEventArgs e)
         {
-            TxbLogin.Text = (CbLesClients.SelectedItem as client).LOGINCLI;
-            BtnDetailClient.Visibility = Visibility.Hidden;
+            Initialiser(true);
+            this.laCommande = new commande();
+            this.laCommande.LOGINCLI = TxbLogin.Text;
+            this.laCommande.IDABO = long.Parse(TxbIDABO.Text);
 
+            this.commandeViewModel.AjouterCommande(this.laCommande);
         }
 
-        //Un placeholder pour aider l'utilisateur 
-        private void TxbDate_GotFocus(object sender, RoutedEventArgs e)
+        private void BtAnnulerNouveau_Click(object sender, RoutedEventArgs e)
         {
-            TxbDate.Text = "JJ/MM/AAAA";
+            Initialiser(true);
+            SpDetailCommande.DataContext = this.lesCommandes[0];
+        }
+
+        public void Initialiser(bool etat)
+        {
+            if (etat)
+            {
+                SpNouveauAjouter.Visibility = Visibility.Hidden;
+                SpNouveau.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SpNouveauAjouter.Visibility = Visibility.Visible;
+                SpNouveau.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

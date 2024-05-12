@@ -9,6 +9,12 @@ namespace AWIT.Model
     [Table("awitbdd.client")]
     public partial class client
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public client()
+        {
+            commandes = new HashSet<commande>();
+        }
+        
         [Key]
         [StringLength(25)]
         public string LOGINCLI { get; set; }
@@ -27,5 +33,8 @@ namespace AWIT.Model
 
         [Column(TypeName = "date")]
         public DateTime? DATECREATIONCLI { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<commande> commandes { get; set; }
     }
 }

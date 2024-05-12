@@ -16,7 +16,6 @@ using AWIT.ViewModel;
 using AWIT.Model;
 using System.ComponentModel;
 using AWIT.View.Commande;
-using AWIT.ViewModel.ClientViewModel;
 
 
 namespace AWIT.View.Client
@@ -40,8 +39,6 @@ namespace AWIT.View.Client
             this.frame = frame;
             this.lesClients = clientViewModel.LesClients;
             LbClients.ItemsSource = this.lesClients;
-
-            clientViewModel.LeControl = LbClients;
 
             if (unClient != null)
             {
@@ -98,6 +95,7 @@ namespace AWIT.View.Client
                 NOMCLI = TxbNom.Text,
                 PRENOMCLI = TxbPrenom.Text,
                 LOGINCLI = TxbLogin.Text,
+                MDPCLI = TxbMdp.Text
             };
             clientViewModel.AjouterUnClient(unClient);
 
@@ -132,11 +130,6 @@ namespace AWIT.View.Client
                 SpNouveauAjouter.Visibility = Visibility.Visible;
                 SpNouveau.Visibility = Visibility.Hidden;
             }
-        }
-
-        private void BtnCommandeModifier_Click(object sender, RoutedEventArgs e)
-        {
-            this.frame.Content = new CommandePage(this.frame, DgCommandes.SelectedItem as commande);
         }
 
     }

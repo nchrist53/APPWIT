@@ -18,7 +18,7 @@ using AWIT.View.Connexion;
 using AWIT.View.Client;
 using AWIT.View.Commande;
 using AWIT.View.Musique;
-using AWIT.View.Aide;
+using AWIT.View.Tiers;
 using AWIT.Model;
 
 namespace AWIT
@@ -32,7 +32,7 @@ namespace AWIT
         ClientPage pClient;
         CommandePage pCommande;
         MusiquePage pMusique;
-        AidePage pAide = new AidePage();
+        TiersPage pTiers;
 
         public MainWindow()
         {
@@ -40,6 +40,7 @@ namespace AWIT
             this.pClient = new ClientPage(FSMain);
             pCommande = new CommandePage(FSMain);
             pMusique = new MusiquePage(FSMain);
+            pTiers = new TiersPage(FSMain);
             ucConnexion = new ConnexionUserControl(this);
             Model.Connexion.GetConnexion();
             if (!Model.Connexion.GetEtat())
@@ -76,7 +77,7 @@ namespace AWIT
             }
             MinWidth = 1000;
             MinHeight = 800;
-            FSMain.Content = pAide;
+            FSMain.Content = pClient;
         }
 
 
@@ -91,14 +92,15 @@ namespace AWIT
             FSMain.Content = pCommande;
         }
 
-        private void Service_Click(object sender, RoutedEventArgs e)
+        private void Musique_Click(object sender, RoutedEventArgs e)
         {
             FSMain.Content = pMusique;
         }
 
-        private void Aide_Click(object sender, RoutedEventArgs e)
+
+        private void Tiers_Click(object sender, RoutedEventArgs e)
         {
-            FSMain.Content = pAide;
+            FSMain.Content = pTiers;
         }
     }
 }

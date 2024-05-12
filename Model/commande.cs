@@ -28,5 +28,7 @@ namespace AWIT.Model
         public DateTime? DATEFIN { get; set; }
 
         public virtual abonnement abonnement { get; set; }
+
+        public virtual client client { get; set; }
     }
 }

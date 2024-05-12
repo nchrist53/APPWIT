@@ -7,6 +7,45 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientPage">
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Snow" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="MinWidth" Value="250" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Maroon" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="MaxColumnWidth" Value="200" />
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Salmon" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+        </Style>
+        <!-- Les méthodes appelées dans le xaml-->
+
+    </Page.Resources>
 
     <Grid>
         <StackPanel x:Name="GestionClient">
@@ -16,12 +55,10 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <!-- contexte de chaque ligne = données de chaque ligne -->
-                            <TextBlock  >
-                                <Run Text="{Binding LOGIN}" FontWeight="SemiBold" />
+                            <TextBlock>
+                                <Run Text="{Binding LOGINCLI}" FontWeight="SemiBold" />
                                 <Run Text=":" />
-                                <Run Text="{Binding PRENOM}" />
-                                <Run Text=" " />
-                                <Run Text="{Binding NOM}" />
+                                <Run Text="{Binding MDPCLI}" />
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -54,66 +91,23 @@
                             </Grid.RowDefinitions>
                             <!-- Titre de la page -->
                             <TextBlock x:Name="TxbTitre" Grid.ColumnSpan="2">Détail du client : </TextBlock>
-
-                            <!-- Numéro -->
-                            <Label Grid.Row="1" Grid.Column="0">Identifiant</Label>
-                            <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding LOGIN}" IsReadOnly="True"/>
         
                             <!-- Login -->
                             <Label Grid.Row="2" Grid.Column="0">Login</Label>
-                            <TextBox x:Name="TxbLogin" Grid.Row="2" Grid.Column="1" Text="{Binding LOGIN}" />
+                            <TextBox x:Name="TxbLogin" Grid.Row="2" Grid.Column="1" Text="{Binding LOGINCLI}" />
 
                             <!-- Mdp -->
                             <Label Grid.Row="3" Grid.Column="0">Mot de Passe </Label>
-                            <TextBox x:Name="TxbMdp" Grid.Row="3" Grid.Column="1" Text="{Binding personne.MDP}"  />
+                            <TextBox x:Name="TxbMdp" Grid.Row="3" Grid.Column="1" Text="{Binding MDPCLI}"  />
         
                             <!-- Nom -->
                             <Label Grid.Row="4" Grid.Column="0">Nom</Label>
-                            <TextBox x:Name="TxbNom" Grid.Row="4" Grid.Column="1" Text="{Binding NOM}"/>
+                            <TextBox x:Name="TxbNom" Grid.Row="4" Grid.Column="1" Text="{Binding NOMCLI}"/>
 
                             <!-- Prénom -->
                             <Label Grid.Row="5" Grid.Column="0">Prénom</Label>
-                            <TextBox x:Name="TxbPrenom" Grid.Row="5" Grid.Column="1" Text="{Binding PRENOM}"/>
-
-                            <!-- Rue -->
-                            <Label Grid.Row="6" Grid.Column="0">Rue</Label>
-                            <TextBox x:Name="TxbRue" Grid.Row="6" Grid.Column="1" Text="{Binding RUE}"/>
-
-                            <!-- Ville -->
-                            <Label Grid.Row="7" Grid.Column="0">Ville</Label>
-                            <TextBox x:Name="TxbVille" Grid.Row="7" Grid.Column="1" Text="{Binding VILLE}"/>
-
-                            <!-- CP -->
-                            <Label Grid.Row="8" Grid.Column="0">CP</Label>
-                            <TextBox x:Name="TxbCP" Grid.Row="8" Grid.Column="1" Text="{Binding CP}"/>
-
-                            <!-- Tél -->
-                            <Label Grid.Row="9" Grid.Column="0">Tél.</Label>
-                            <TextBox x:Name="TxbTel" Grid.Row="9" Grid.Column="1" Text="{Binding TEL}"/>
-
-                            <!-- Email -->
-                            <Label Grid.Row="10" Grid.Column="0">Email</Label>
-                            <TextBox x:Name="TxbEmail" Grid.Row="10" Grid.Column="1" Text="{Binding EMAIL}"/>
-
-                            <!-- Les commandes -->
-                            <StackPanel Grid.Row="11" Grid.ColumnSpan="2">
-                                <Label  >Les commandes</Label>
-                                <DataGrid  Name="DgCommandes" ItemsSource="{Binding commandes}" AutoGenerateColumns="False" >
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="N° Commande"  Binding="{Binding NOCOMMANDE}"/>
-                                        <DataGridTextColumn Header="Date" Binding="{Binding DATE}" />
-                                        <DataGridTextColumn Header="Total" Binding="{Binding TOTAL}" />   
-                                        <DataGridTemplateColumn Header="Modifier">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="BtnCommandeModifier" Click="BtnCommandeModifier_Click">Modifier</Button>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>  
-                                
-                            </StackPanel>
+                            <TextBox x:Name="TxbPrenom" Grid.Row="5" Grid.Column="1" Text="{Binding PRENOMCLI}"/>
+                            
                             <!-- MODIFIER -->
                             <StackPanel Name="SpNouveau" Grid.Row="12" Grid.ColumnSpan="2" Visibility="Visible">
                             <Button x:Name="BtModifier"  Click="BtModifier_Click">MODIFIER</Button>

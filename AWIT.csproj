@@ -139,8 +139,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\CommandeViewModel.cs" />
     <Compile Include="ViewModel\ConnexionViewModel.cs" />
     <Compile Include="ViewModel\MusiqueViewModel.cs" />
+    <Compile Include="ViewModel\TiersViewModel.cs" />
     <Compile Include="View\Client\ClientPage.xaml.cs">
       <DependentUpon>ClientPage.xaml</DependentUpon>
     </Compile>
@@ -152,6 +154,9 @@
     </Compile>
     <Compile Include="View\Musique\MusiquePage.xaml.cs">
       <DependentUpon>MusiquePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Tiers\TiersPage.xaml.cs">
+      <DependentUpon>TiersPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Musique\MusiquePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Tiers\TiersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,9 +228,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="View\Aide\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

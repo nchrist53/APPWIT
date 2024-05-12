@@ -13,7 +13,7 @@
                 <MenuItem x:Name="Client"  Header="Gestion des clients" Click="Client_Click"/>
                 <MenuItem x:Name="Commande" Header="Gestion des commandes" Click="Commande_Click"/>
                 <MenuItem x:Name="Musique" Header="Gestion des musiques" Click="Musique_Click"/>
-                <MenuItem x:Name="Aide" Header="Aide" Click="Aide_Click"/>
+                <MenuItem x:Name="Tiers" Header="Tiers" Click="Tiers_Click"/>
             </Menu>
 
             <StackPanel >

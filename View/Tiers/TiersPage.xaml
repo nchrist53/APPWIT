@@ -1,14 +1,17 @@
-﻿<Page x:Class="AWIT.View.Musique.MusiquePage"
+﻿<Page x:Class="AWIT.View.Tiers.TiersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:AWIT.View.Musique"
+      xmlns:local="clr-namespace:AWIT.View.Tiers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MusiquePage">
+      Title="TiersPage">
 
     <Page.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="Snow" />
             <Setter Property="Margin" Value="2" />
@@ -46,24 +49,24 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel x:Name="GestionService">
+        <StackPanel x:Name="GestionTiers">
             <TextBlock>Détail</TextBlock>
             <DockPanel>
-                <ListBox  Name="LbMusique"  Width="250" SelectionChanged="LbServices_SelectionChanged">
+                <ListBox  Name="LbTiers"  Width="250" SelectionChanged="LbTiers_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <!-- contexte de chaque ligne = données de chaque ligne -->
-                            <TextBlock>
-                                <Run Text="{Binding TITRE}" FontWeight="SemiBold"/>
+                            <TextBlock  >
+                                <Run Text="{Binding IDABO}" FontWeight="SemiBold"/>
                                 <Run Text=":" />
-                                <Run Text="{Binding album.NOM}" />
+                                <Run Text="{Binding NOM}" />
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <TextBlock>
-                    <StackPanel DataContext="{Binding ElementName=LbMusique, Path=SelectedItem}" MaxWidth="800" Name="SpDetailService">
-                        <Grid x:Name="GDetailService">
+                    <StackPanel DataContext="{Binding ElementName=LbTiers, Path=SelectedItem}" MaxWidth="800" Name="SpDetailTier">
+                        <Grid x:Name="GDetailTier">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="4*" />
@@ -79,33 +82,32 @@
                                 <RowDefinition Height="*" />    
                                 <RowDefinition Height="*" />   
                                 <RowDefinition Height="*" />    
-                                <RowDefinition Height="*" />    
+                                <RowDefinition Height="*" />
+
 
                             </Grid.RowDefinitions>
                             <!-- Titre de la page -->
-                            <TextBlock x:Name="TxbDetail" Grid.ColumnSpan="2">Détail du service : </TextBlock>
+                            <TextBlock x:Name="TxbDetail" Grid.ColumnSpan="2">Détail du tier : </TextBlock>
 
-                            <!-- Référence -->
-                            <Label Grid.Row="1" Grid.Column="0"  >Référence</Label>
-                            <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding REFMUS}" IsReadOnly="true" />
-                            
-                            <!-- Titre -->
-                            <Label Grid.Row="3" Grid.Column="0"  >Titre</Label>
-                            <TextBox x:Name="TxbTitre" Grid.Row="3" Grid.Column="1" Text="{Binding TITRE}" />
-                            
-                            <!-- Résumé -->
-                            <Label Grid.Row="4" Grid.Column="0"  >Paroles</Label>
-                            <TextBox x:Name="TxbResume" Grid.Row="4" Grid.Column="1" Text="{Binding PAROLE}" />
-                                                       
+                            <!-- ID -->
+                            <Label Grid.Row="1" Grid.Column="0">ID</Label>
+                            <TextBox x:Name="TxbID" Grid.Row="1" Grid.Column="1" Text="{Binding IDABO}" IsReadOnly="true" />
         
-                            <!-- DESCRIPTION -->
-                            <Label Grid.Row="5" Grid.Column="0">Son</Label>
-                            <TextBox x:Name="TxbDes" Grid.Row="5" Grid.Column="1" Text="{Binding SON}"/>
+                            <!-- Nom -->
+                            <Label Grid.Row="2" Grid.Column="0">Nom</Label>
+                            <TextBox x:Name="TxbNom" Grid.Row="2" Grid.Column="1" Text="{Binding NOM}" />
                             
-                            <!-- STOCK -->
-                            <Label Grid.Row="7" Grid.Column="0">Id album</Label>
-                            <TextBox x:Name="TxbStock" Grid.Row="7" Grid.Column="1" Text="{Binding IDALBUM}"/>
-
+                            <!-- Description -->
+                            <Label Grid.Row="3" Grid.Column="0">Description</Label>
+                            <TextBox x:Name="TxbDescription" Grid.Row="3" Grid.Column="1" Text="{Binding DESCRIPTION}" />
+                            
+                            <!-- Prix Mensuel -->
+                            <Label Grid.Row="4" Grid.Column="0">Prix Mensuel</Label>
+                            <TextBox x:Name="TxbPrix" Grid.Row="4" Grid.Column="1" Text="{Binding PRIXMENSUEL}" />
+                            
+                            <!-- Image -->
+                            <Label Grid.Row="5" Grid.Column="0">Image</Label>
+                            <TextBox x:Name="TxbImage" Grid.Row="5" Grid.Column="1" Text="{Binding IMAGE}" />
 
                             <!-- MODIFIER -->
                             <StackPanel Name="SpNouveau" Grid.Row="9" Grid.ColumnSpan="2" Visibility="Visible">

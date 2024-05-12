@@ -11,7 +11,7 @@ using AWIT.Model;
 
 namespace AWIT.ViewModel
 {
-    class ClientViewModel
+    class ClientViewModel<T> : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Data db = new Data();
@@ -43,7 +43,7 @@ namespace AWIT.ViewModel
             set
             {
                 leClient = value;
-                OnPropertyChanged("LeClients");
+                OnPropertyChanged("LeClient");
             }
         }
 
@@ -103,10 +103,8 @@ namespace AWIT.ViewModel
 
         public void SupprimerUnClient(client unClient)
         {
-            int cle = -1;
             if (this.lesClients.Contains(unClient))
             {
-                cle = lesClients.IndexOf(unClient);
                 db.clients.Remove(unClient);
 
             }

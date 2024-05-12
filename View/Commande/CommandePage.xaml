@@ -8,9 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CommandePage">
     <Page.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="Snow" />
             <Setter Property="Margin" Value="2" />
@@ -52,7 +49,7 @@
 
     <Grid>
         <!-- StackPanel : 1er conteneur -->
-        <StackPanel x:Name="SpGestionClient">
+        <StackPanel x:Name="SpGestionCommande">
             <TextBlock>Détail</TextBlock>
             <DockPanel>
                 <!-- ListBox de commande-->
@@ -60,11 +57,11 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock  >
-                                <Run Text="{Binding NOCOMMANDE}" FontWeight="SemiBold"/>
+                                <Run Text="{Binding REFCOM}" FontWeight="SemiBold"/>
                                 <Run Text=":" />
-                                <Run Text="{Binding LOGIN}" />
+                                <Run Text="{Binding LOGINCLI}" />
                                 <Run Text=" - " />
-                                <Run Text="{Binding DATE}" />
+                                <Run Text="{Binding abonnement.NOM}" />
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -84,7 +81,15 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />                             
+                                <RowDefinition Height="*" />          
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
 
                             </Grid.RowDefinitions>
                             <!-- Titre de la page -->
@@ -92,74 +97,30 @@
 
                             <!-- Numéro -->
                             <Label Grid.Row="1" Grid.Column="0"  >N° Commande</Label>
-                            <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding LOGIN}" IsReadOnly="True"/>
+                            <TextBox x:Name="TxbNum" Grid.Row="1" Grid.Column="1" Text="{Binding REFCOM}" IsReadOnly="True"/>
         
                             <!-- Login -->
                             <Label Grid.Row="2" Grid.Column="0">Login</Label>
-                            <DockPanel  Grid.Row="2" Grid.Column="1" Name="DpInfoClient">
-                                <TextBox x:Name="TxbLogin" Text="{Binding LOGIN}" />
-                                <Button x:Name="BtnDetailClient" Click="BtnDetailClient_Click" Width="150">
-                                    <Run Text="{Binding client.NOM, StringFormat=AFFICHER DETAIL {0}}" />
-                                </Button>
-                                <ComboBox Name="CbLesClients" DisplayMemberPath="LOGIN" Margin="5,1,0,1" SelectionChanged="CbLesClients_SelectionChanged" Width="150"/>
-                            </DockPanel>
-                            <!-- Date -->
-                            <Label Grid.Row="4" Grid.Column="0">Date</Label>
+                            <TextBox x:Name="TxbLogin" Grid.Row="2" Grid.Column="1" Text="{Binding LOGINCLI}"/>
                             
-                            <TextBox x:Name="TxbDate" Grid.Row="4" Grid.Column="1" Text="{Binding DATE}" LostFocus="TxbDate_LostFocus" GotFocus="TxbDate_GotFocus"/>
-                           
-                                
-
-
-                            <!-- Les services -->
-                            <StackPanel Grid.Row="5" Grid.ColumnSpan="2">
-                                <Label  >Les commandes</Label>
-                                <DataGrid  Margin="5" Name="DgCommandes" ItemsSource="{Binding lignecommandes}" AutoGenerateColumns="False"  MaxColumnWidth="200">
-                                    <DataGrid.Columns >
-                                        <DataGridTextColumn Header="Référence"  Binding="{Binding service.REFERENCE}"/>
-                                        <DataGridTextColumn Header="Titre"  Binding="{Binding service.TITRE}"/>
-                                        <DataGridTextColumn Header="Prix"  Binding="{Binding service.PRIX}"/>
-                                        <DataGridTemplateColumn Header="Photo">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>                                                                                               
-                                                    <Image Margin="2" Width="100" Height="100">
-                                                        <Image.Source>
-                                                            <Binding Path="service.PHOTO">
-                                                            </Binding>
-                                                        </Image.Source>
-                                                    </Image>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        
-                                        <DataGridTextColumn Header="Stock"  Binding="{Binding service.STOCK}"/>
-                                        <DataGridTextColumn Header="Catégorie" Binding="{Binding service.categorie.LIBELE}" />
-                                         
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="BtnServiceModifier" Click="BtnServiceModifier_Click"> Détail</Button>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                                                              
-                                        
-                                    </DataGrid.Columns>
-                                </DataGrid>  
-                                  
-                            </StackPanel>
+                            <!-- Tier -->
+                            <Label Grid.Row="3" Grid.Column="0">ID Tier</Label>
+                            <TextBox x:Name="TxbIDABO" Grid.Row="3" Grid.Column="1" Text="{Binding IDABO}"/>
+                            
                             <!-- MODIFIER -->
-                            <StackPanel Name="SpNouveau" Grid.Row="6" Grid.ColumnSpan="2" Visibility="Visible">
+                            <StackPanel Name="SpNouveau" Grid.Row="7" Grid.ColumnSpan="2" Visibility="Visible">
+                               
                             <Button x:Name="BtModifier"  Click="BtModifier_Click">MODIFIER COMMANDE</Button>
 
                             <!-- SUPPRIMER -->
                             <Button x:Name="BtSupprimer"  Click="BtSupprimer_Click">SUPPRIMER COMMANDE</Button>
-
-                            <!-- VOTRE TAF-->
+                                
+                            <Button x:Name="BtNouveau" Click="BtNouveau_Click">NOUVELLE COMMANDE</Button>
+                            </StackPanel>
                             
-                                <Button x:Name="BtAjoutLigneCommande" >AJOUTER UNE LIGNE</Button> 
-                                <Button x:Name="BtModifierLigneCommande" >MODIFIER UNE LIGNE</Button>
-                                 <Button x:Name="BtSupprimerLigneCommande" >SUPPRIMER UNE LIGNE</Button>
+                            <StackPanel Name="SpNouveauAjouter" Grid.Row="10" Grid.ColumnSpan="2" Visibility="Hidden">
+                                <Button x:Name="BtAjouter" Click="BtAjouter_Click">AJOUTER</Button>
+                                <Button x:Name="BtAnnulerNouveau" Click="BtAnnulerNouveau_Click">ANNULER</Button>
                             </StackPanel>
                             
                         </Grid>

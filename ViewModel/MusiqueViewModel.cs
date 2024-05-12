@@ -11,7 +11,7 @@ using AWIT.Model;
 
 namespace AWIT.ViewModel
 {
-    class MusiqueViewModel
+    class MusiqueViewModel<T> : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Data db = new Data();
@@ -99,7 +99,7 @@ namespace AWIT.ViewModel
                     db.musiques.ToList()[i] = uneMusique;
                 }
             }
-            int cle = db.musiques.ToList().IndexOf(this.RechercherLaMusique(uneMusique.REFMUS));
+            int cle = db.musiques.ToList().IndexOf(this.RechercherLaMusique(Convert.ToInt32(uneMusique.REFMUS)));
             db.musiques.ToList()[cle] = uneMusique;
 
             //On essaye de mettre à jour la bdd
@@ -107,7 +107,7 @@ namespace AWIT.ViewModel
             {
                 db.SaveChanges();
                 MessageBox.Show($"Le service avec la référence : {uneMusique.REFMUS} a été modifié.e!");
-                lesMusiques = db.musiques.ToList();
+                LesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace AWIT.ViewModel
             {
                 db.SaveChanges();
                 MessageBox.Show($"Le service {uneMusique.TITRE} a été ajouté!");
-                lesMusiques = db.musiques.ToList();
+                LesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace AWIT.ViewModel
             {
                 db.SaveChanges();
                 MessageBox.Show($"Le service {uneMusique.TITRE} a été supprimé!");
-                lesMusiques = db.musiques.ToList();
+                LesMusiques = db.musiques.ToList();
             }
             catch (Exception e)
             {
